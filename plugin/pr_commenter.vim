@@ -1,20 +1,24 @@
 " --------------------------------
 " Add our plugin to the path
 " --------------------------------
-python import sys
-python import vim
-python sys.path.append(vim.eval('expand("<sfile>:h")'))
+python3 import sys
+python3 import vim
+python3 sys.path.append(vim.eval('expand("<sfile>:h")'))
 
 " --------------------------------
 "  Function(s)
 " --------------------------------
-function! TemplateExample()
-python << endOfPython
+function! PrCommenter()
+python3 << endOfPython
 
-from pr_commenter import pr_commenter_example
+from pr_commenter import PrCommenter, VimExt
 
-for n in range(5):
-    print(pr_commenter_example())
+vim_window = VimExt()
+
+pr = PrCommenter('bisdn', 'basebox')
+pr.comments_get()
+
+vim_window.print_lines(pr.comments_output())
 
 endOfPython
 endfunction
@@ -22,4 +26,4 @@ endfunction
 " --------------------------------
 "  Expose our commands to the user
 " --------------------------------
-command! Example call TemplateExample()
+command! PrCommenter call PrCommenter()
